@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaleHive - Your Online Book Reading Platform</title>
+    <!-- tailwindcss  -->
+    <link rel="stylesheet" href="./assets/css/tailwind.css">
+    <!-- custom css  -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <svg class="h-8 w-8 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2-1a1 1 0 00-1 1v12a1 1 0 001 1h8a1 1 0 001-1V4a1 1 0 00-1-1H6z" clip-rule="evenodd"></path>
+                    <path d="M8 7a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1zm0 4a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"></path>
+                </svg>
+                <span class="text-xl font-bold text-gray-800">TaleHive</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#" class="text-gray-800 hover:text-yellow-500 transition duration-300">Home</a>
+                <a href="#" class="text-gray-600 hover:text-yellow-500 transition duration-300">Browse</a>
+                <a href="#" class="text-gray-600 hover:text-yellow-500 transition duration-300">Categories</a>
+                <a href="#" class="text-gray-600 hover:text-yellow-500 transition duration-300">About</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="#" class="text-gray-600 hover:text-yellow-500 transition duration-300">
+                    <i class="fas fa-bookmark"></i>
+                </a>
+                <a href="#" class="text-gray-600 hover:text-yellow-500 transition duration-300">
+                    <i class="fas fa-bell"></i>
+                </a>
+                <a href="#" class="bg-yellow-500 text-white px-4 py-2 rounded-full hover:bg-yellow-600 transition duration-300">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Banner -->
+    <section class="bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-200 py-16">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-8 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Discover Your Next Favorite Book</h1>
+                <p class="text-lg text-gray-700 mb-6">Explore thousands of books across all genres. <br> Read anywhere, anytime.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="bg-gray-800 text-white px-6 py-3 rounded-full hover:bg-gray-900 transition duration-300">Get Started</a>
+                    <a href="#" class="bg-white text-gray-800 px-6 py-3 rounded-full hover:bg-gray-100 transition duration-300">Learn More</a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center cursor-pointer">
+                <img src="https://placehold.co/500x300" alt="Featured Book" class="rounded-lg shadow-xl transform -rotate-3 hover:rotate-0 transition duration-500">
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto">
+                <div class="bg-gray-100 p-6 rounded-xl shadow-md">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">Find Your Perfect Read</h2>
+                    <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+                        <input type="text" placeholder="Search by title, author, or keyword" class="flex-grow px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                        <select class="px-4 py-3 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            <option value="">All Genres</option>
+                            <option value="fiction">Fiction</option>
+                            <option value="non-fiction">Non-Fiction</option>
+                            <option value="mystery">Mystery</option>
+                            <option value="sci-fi">Sci-Fi</option>
+                            <option value="romance">Romance</option>
+                        </select>
+                        <button class="bg-yellow-500 text-white px-6 py-3 rounded-lg hover:bg-yellow-600 transition duration-300">
+                            <i class="fas fa-search mr-2"></i> Search
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Explore Categories</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300 text-center">
+                    <div class="bg-red-100 p-4 rounded-full inline-block mb-4">
+                        <i class="fas fa-heart text-red-500 text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800">Romance</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300 text-center">
+                    <div class="bg-purple-100 p-4 rounded-full inline-block mb-4">
+                        <i class="fas fa-hat-wizard text-purple-500 text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800">Fantasy</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300 text-center">
+                    <div class="bg-blue-100 p-4 rounded-full inline-block mb-4">
+                        <i class="fas fa-rocket text-blue-500 text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800">Sci-Fi</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300 text-center">
+                    <div class="bg-yellow-100 p-4 rounded-full inline-block mb-4">
+                        <i class="fas fa-search text-yellow-500 text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800">Mystery</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300 text-center">
+                    <div class="bg-green-100 p-4 rounded-full inline-block mb-4">
+                        <i class="fas fa-book-open text-green-500 text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800">Non-Fiction</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300 text-center">
+                    <div class="bg-gray-100 p-4 rounded-full inline-block mb-4">
+                        <i class="fas fa-ellipsis-h text-gray-500 text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800">More</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trending Books Section -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-800">Trending Books</h2>
+                <div class="flex space-x-2">
+                    <button id="prev-btn" class="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition duration-300">
+                        <i class="fas fa-chevron-left text-gray-600"></i>
+                    </button>
+                    <button id="next-btn" class="p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition duration-300">
+                        <i class="fas fa-chevron-right text-gray-600"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="relative overflow-hidden">
+                <div id="books-carousel" class="flex space-x-6 transition-transform duration-500 ease-in-out">
+                    <!-- Book 1 -->
+                    <div class="flex-shrink-0 w-48 md:w-64">
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
+                            <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-64 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-bold text-gray-800 mb-1">The Silent Patient</h3>
+                                <p class="text-sm text-gray-600 mb-2">Alex Michaelides</p>
+                                <div class="flex items-center mb-2">
+                                    <div class="flex text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span class="text-sm text-gray-600 ml-1">4.5</span>
+                                </div>
+                                <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Book 2 -->
+                    <div class="flex-shrink-0 w-48 md:w-64">
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
+                            <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-64 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-bold text-gray-800 mb-1">Atomic Habits</h3>
+                                <p class="text-sm text-gray-600 mb-2">James Clear</p>
+                                <div class="flex items-center mb-2">
+                                    <div class="flex text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="text-sm text-gray-600 ml-1">5.0</span>
+                                </div>
+                                <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Book 3 -->
+                    <div class="flex-shrink-0 w-48 md:w-64">
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
+                            <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-64 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-bold text-gray-800 mb-1">The Midnight Library</h3>
+                                <p class="text-sm text-gray-600 mb-2">Matt Haig</p>
+                                <div class="flex items-center mb-2">
+                                    <div class="flex text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="text-sm text-gray-600 ml-1">4.0</span>
+                                </div>
+                                <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Book 4 -->
+                    <div class="flex-shrink-0 w-48 md:w-64">
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
+                            <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-64 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-bold text-gray-800 mb-1">Educated</h3>
+                                <p class="text-sm text-gray-600 mb-2">Tara Westover</p>
+                                <div class="flex items-center mb-2">
+                                    <div class="flex text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span class="text-sm text-gray-600 ml-1">4.5</span>
+                                </div>
+                                <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Book 5 -->
+                    <div class="flex-shrink-0 w-48 md:w-64">
+                        <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
+                            <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-64 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-bold text-gray-800 mb-1">Where the Crawdads Sing</h3>
+                                <p class="text-sm text-gray-600 mb-2">Delia Owens</p>
+                                <div class="flex items-center mb-2">
+                                    <div class="flex text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="text-sm text-gray-600 ml-1">4.0</span>
+                                </div>
+                                <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-12 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Stay Updated</h2>
+                <p class="text-gray-600 mb-6">Subscribe to our newsletter to get updates on new books, exclusive offers, and reading recommendations.</p>
+                <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 justify-center">
+                    <input type="email" placeholder="Your email address" class="px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 md:w-96">
+                    <button class="bg-yellow-500 text-white px-6 py-3 rounded-lg hover:bg-yellow-600 transition duration-300">Subscribe</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <svg class="h-8 w-8 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2-1a1 1 0 00-1 1v12a1 1 0 001 1h8a1 1 0 001-1V4a1 1 0 00-1-1H6z" clip-rule="evenodd"></path>
+                            <path d="M8 7a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1zm0 4a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"></path>
+                        </svg>
+                        <span class="text-xl font-bold">TaleHive</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">Your ultimate destination for digital reading. Discover, read, and share your favorite books.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-pinterest"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Browse</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Categories</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">FAQ</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Terms of Service</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Accessibility</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-start space-x-2">
+                            <i class="fas fa-map-marker-alt mt-1"></i>
+                            <span>123 Reading Lane, Bookville, BK 12345</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <i class="fas fa-phone mt-1"></i>
+                            <span>+1 (555) 123-4567</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <i class="fas fa-envelope mt-1"></i>
+                            <span>info@talehive.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2023 TaleHive. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
