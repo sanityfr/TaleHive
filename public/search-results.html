@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - TaleHive</title>
+    <!-- tailwindcss  -->
+    <link rel="stylesheet" href="./assets/css/tailwind.css">
+    <!-- custom css  -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .sticky-search {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: white;
+        }
+        .sticky-sidebar {
+            position: sticky;
+            top: 120px; /* Adjusted to account for the search bar height */
+            z-index: 5;
+            height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+        .filter-active {
+            background-color: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+        }
+        .book-description {
+            height: 40px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            max-width: 100%;
+            white-space: normal;
+            max-height: 40px;
+        }
+        /* Custom checkbox styling with yellow accent */
+        input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 3px;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+            background-color: white;
+        }
+        input[type="checkbox"]:checked {
+            background-color: #f59e0b;
+            border-color: #f59e0b;
+        }
+        input[type="checkbox"]:checked::after {
+            content: "";
+            position: absolute;
+            left: 5px;
+            top: 2px;
+            width: 5px;
+            height: 9px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        /* Custom radio button styling with yellow accent */
+        input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 50%;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+            background-color: white;
+        }
+        input[type="radio"]:checked {
+            border: 2px solid #f59e0b;
+        }
+        input[type="radio"]:checked::after {
+            content: "";
+            position: absolute;
+            left: 3px;
+            top: 3px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #f59e0b;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <svg class="h-8 w-8 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2-1a1 1 0 00-1 1v12a1 1 0 001 1h8a1 1 0 001-1V4a1 1 0 00-1-1H6z" clip-rule="evenodd"></path>
+                    <path d="M8 7a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1zm0 4a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"></path>
+                </svg>
+                <span class="text-xl font-bold text-gray-800">TaleHive</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="text-gray-600 hover:text-yellow-500 transition duration-300">Home</a>
+                <a href="#" class="text-gray-800 hover:text-yellow-500 transition duration-300">Browse</a>
+                <a href="#" class="text-gray-600 hover:text-yellow-500 transition duration-300">Categories</a>
+                <a href="#" class="text-gray-600 hover:text-yellow-500 transition duration-300">About</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="#" class="text-gray-600 hover:text-yellow-500 transition duration-300">
+                    <i class="fas fa-bookmark"></i>
+                </a>
+                <a href="#" class="text-gray-600 hover:text-yellow-500 transition duration-300">
+                    <i class="fas fa-bell"></i>
+                </a>
+                <a href="#" class="bg-yellow-500 text-white px-4 py-2 rounded-full hover:bg-yellow-600 transition duration-300">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sticky Search Bar -->
+    <div class="sticky-search shadow-md">
+        <div class="container mx-auto px-4 py-4">
+            <div class="bg-gray-100 p-4 rounded-xl">
+                <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+                    <input type="text" value="Fantasy novels" placeholder="Search by title, author, or keyword" class="flex-grow px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                    <button class="bg-yellow-500 text-white px-6 py-3 rounded-lg hover:bg-yellow-600 transition duration-300">
+                        <i class="fas fa-search mr-2"></i> Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex flex-col lg:flex-row">
+            <!-- Filter Sidebar -->
+            <div class="lg:w-1/4 pr-0 lg:pr-8 mb-8 lg:mb-0">
+                <div class="bg-white p-6 rounded-xl shadow-sm sticky-sidebar">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">Filters</h2>
+                    
+                    <!-- Genre Filter -->
+                    <div class="mb-6">
+                        <h3 class="font-semibold text-gray-700 mb-3">Genre</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="genre-fantasy" class="mr-2" checked>
+                                <label for="genre-fantasy" class="text-gray-600 hover:text-yellow-500 cursor-pointer">Fantasy</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="genre-scifi" class="mr-2">
+                                <label for="genre-scifi" class="text-gray-600 hover:text-yellow-500 cursor-pointer">Science Fiction</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="genre-mystery" class="mr-2">
+                                <label for="genre-mystery" class="text-gray-600 hover:text-yellow-500 cursor-pointer">Mystery</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="genre-romance" class="mr-2">
+                                <label for="genre-romance" class="text-gray-600 hover:text-yellow-500 cursor-pointer">Romance</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="genre-nonfiction" class="mr-2">
+                                <label for="genre-nonfiction" class="text-gray-600 hover:text-yellow-500 cursor-pointer">Non-Fiction</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Rating Filter -->
+                    <div class="mb-6">
+                        <h3 class="font-semibold text-gray-700 mb-3">Rating</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center">
+                                <input type="radio" name="rating" id="rating-any" class="mr-2">
+                                <label for="rating-any" class="text-gray-600 hover:text-yellow-500 cursor-pointer">Any rating</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" name="rating" id="rating-4plus" class="mr-2" checked>
+                                <label for="rating-4plus" class="text-gray-600 hover:text-yellow-500 cursor-pointer">4+ stars</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="radio" name="rating" id="rating-3plus" class="mr-2">
+                                <label for="rating-3plus" class="text-gray-600 hover:text-yellow-500 cursor-pointer">3+ stars</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Language Filter -->
+                    <div class="mb-6">
+                        <h3 class="font-semibold text-gray-700 mb-3">Language</h3>
+                        <select class="w-full px-4 py-2 rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            <option value="">All Languages</option>
+                            <option value="english" selected>English</option>
+                            <option value="spanish">Spanish</option>
+                            <option value="french">French</option>
+                            <option value="german">German</option>
+                            <option value="japanese">Japanese</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Publication Year Filter -->
+                    <div class="mb-6">
+                        <h3 class="font-semibold text-gray-700 mb-3">Publication Year</h3>
+                        <div class="flex space-x-4">
+                            <select class="w-1/2 px-4 py-2 rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                <option value="">From</option>
+                                <option value="2023">2023</option>
+                                <option value="2020">2020</option>
+                                <option value="2015">2015</option>
+                                <option value="2010">2010</option>
+                                <option value="2000">2000</option>
+                                <option value="1990">1990</option>
+                            </select>
+                            <select class="w-1/2 px-4 py-2 rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                <option value="">To</option>
+                                <option value="2023" selected>2023</option>
+                                <option value="2020">2020</option>
+                                <option value="2015">2015</option>
+                                <option value="2010">2010</option>
+                                <option value="2000">2000</option>
+                                <option value="1990">1990</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Apply/Reset Buttons -->
+                    <div class="flex space-x-4">
+                        <button class="w-1/2 bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Apply</button>
+                        <button class="w-1/2 bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition duration-300">Reset</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Search Results -->
+            <div class="lg:w-3/4">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Search Results <span class="text-gray-500 text-lg font-normal">(20 books found)</span></h2>
+                    <div class="flex items-center">
+                        <span class="text-gray-600 mr-2">Sort by:</span>
+                        <select class="px-4 py-2 rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            <option value="relevance">Relevance</option>
+                            <option value="newest">Newest</option>
+                            <option value="rating">Highest Rating</option>
+                            <option value="popularity">Popularity</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Book Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Book Card 1 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                        <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 mb-1">The Shadow Kingdom</h3>
+                            <p class="text-sm text-gray-600 mb-2">By Sarah J. Maas</p>
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="text-sm text-gray-600 ml-1">4.5</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3 book-description">A thrilling fantasy novel about a young warrior.</p>
+                            <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Book Card 2 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                        <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 mb-1">Dragon's Breath</h3>
+                            <p class="text-sm text-gray-600 mb-2">By Michael J. Sullivan</p>
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="text-sm text-gray-600 ml-1">4.0</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3 book-description">An epic tale of dragons and heroes in a magical world.</p>
+                            <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Book Card 3 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                        <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 mb-1">The Crystal Sorcerer</h3>
+                            <p class="text-sm text-gray-600 mb-2">By Brandon Sanderson</p>
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="text-sm text-gray-600 ml-1">5.0</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3 book-description">A masterpiece with a unique crystalline magic system.</p>
+                            <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Book Card 4 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                        <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 mb-1">Realm of Shadows</h3>
+                            <p class="text-sm text-gray-600 mb-2">By Leigh Bardugo</p>
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="text-sm text-gray-600 ml-1">4.5</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3 book-description">A young thief discovers her magical abilities.</p>
+                            <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Book Card 5 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                        <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 mb-1">The Last Enchanter</h3>
+                            <p class="text-sm text-gray-600 mb-2">By Neil Gaiman</p>
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="text-sm text-gray-600 ml-1">4.0</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3 book-description">A dark tale about the last practitioner of magic.</p>
+                            <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Book Card 6 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                        <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 mb-1">Crown of Thorns</h3>
+                            <p class="text-sm text-gray-600 mb-2">By George R.R. Martin</p>
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="text-sm text-gray-600 ml-1">4.7</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3 book-description">A political fantasy epic with unexpected twists.</p>
+                            <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Book Card 7 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                        <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 mb-1">Mystic Realms</h3>
+                            <p class="text-sm text-gray-600 mb-2">By Cassandra Clare</p>
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="text-sm text-gray-600 ml-1">4.0</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3 book-description">A sorceress discovers her powers in a magical world.</p>
+                            <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Book Card 8 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                        <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 mb-1">The Forgotten Spell</h3>
+                            <p class="text-sm text-gray-600 mb-2">By Robin Hobb</p>
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="text-sm text-gray-600 ml-1">4.6</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3 book-description">An ancient spell threatens a kingdom's balance.</p>
+                            <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Book Card 9 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                        <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 mb-1">Whispers of Magic</h3>
+                            <p class="text-sm text-gray-600 mb-2">By V.E. Schwab</p>
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="text-sm text-gray-600 ml-1">4.2</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3 book-description">One woman holds the key to magic's revival.</p>
+                            <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Book Card 10 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                        <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 mb-1">The Enchanted Forest</h3>
+                            <p class="text-sm text-gray-600 mb-2">By Terry Brooks</p>
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="text-sm text-gray-600 ml-1">5.0</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3 book-description">A mystical forest holds kingdom-saving secrets.</p>
+                            <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Book Card 11 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                        <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 mb-1">The Wizard's Path</h3>
+                            <p class="text-sm text-gray-600 mb-2">By Patrick Rothfuss</p>
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="text-sm text-gray-600 ml-1">4.8</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3 book-description">A wizard's journey to master arcane arts.</p>
+                            <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Book Card 12 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                        <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 mb-1">Throne of Elves</h3>
+                            <p class="text-sm text-gray-600 mb-2">By Tad Williams</p>
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="text-sm text-gray-600 ml-1">4.1</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3 book-description">The elven kingdom faces a dark threat.</p>
+                            <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Book Card 13 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                        <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 mb-1">The Dragon Rider</h3>
+                            <p class="text-sm text-gray-600 mb-2">By Christopher Paolini</p>
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="text-sm text-gray-600 ml-1">4.7</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3">A farm boy discovers a dragon egg and is thrust into an adventure that will determine the fate of the kingdom.</p>
+                            <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Book Card 14 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                        <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 mb-1">The Sorcerer's Apprentice</h3>
+                            <p class="text-sm text-gray-600 mb-2">By Ursula K. Le Guin</p>
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="text-sm text-gray-600 ml-1">4.3</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3">A young apprentice must learn to control his growing magical abilities before they consume him.</p>
+                            <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Book Card 15 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                        <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 mb-1">The Lost City</h3>
+                            <p class="text-sm text-gray-600 mb-2">By Robert Jordan</p>
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="text-sm text-gray-600 ml-1">4.9</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3">An expedition to find a legendary lost city uncovers ancient magic and dangerous secrets.</p>
+                            <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Book Card 16 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                        <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 mb-1">The Witch Hunter</h3>
+                            <p class="text-sm text-gray-600 mb-2">By J.K. Rowling</p>
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="text-sm text-gray-600 ml-1">4.6</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3">A witch hunter discovers that not all witches are evil, forcing him to question everything he believes.</p>
+                            <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Book Card 17 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                        <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 mb-1">The Ice Kingdom</h3>
+                            <p class="text-sm text-gray-600 mb-2">By Andrzej Sapkowski</p>
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="text-sm text-gray-600 ml-1">4.2</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3">A monster hunter is hired to break a curse that has trapped a kingdom in eternal winter.</p>
+                            <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Book Card 18 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                        <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 mb-1">The Phoenix Blade</h3>
+                            <p class="text-sm text-gray-600 mb-2">By Raymond E. Feist</p>
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="text-sm text-gray-600 ml-1">4.5</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3">A legendary sword with the power to resurrect its wielder is sought by heroes and villains alike.</p>
+                            <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Book Card 19 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                        <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 mb-1">The Mage's Tower</h3>
+                            <p class="text-sm text-gray-600 mb-2">By Terry Pratchett</p>
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="text-sm text-gray-600 ml-1">4.0</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3">A humorous tale about a failed wizard who inherits a magical tower with a mind of its own.</p>
+                            <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Book Card 20 -->
+                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition duration-300">
+                        <img src="https://via.placeholder.com/300x400" alt="Book Cover" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-bold text-gray-800 mb-1">The Enchanted Crown</h3>
+                            <p class="text-sm text-gray-600 mb-2">By Diana Wynne Jones</p>
+                            <div class="flex items-center mb-2">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="text-sm text-gray-600 ml-1">4.9</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-3">A magical crown that grants wishes comes with unexpected consequences for the kingdom.</p>
+                            <button class="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition duration-300">Read Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pagination -->
+                <div class="mt-10 flex justify-center">
+                    <nav class="flex items-center space-x-2">
+                        <a href="#" class="px-3 py-2 rounded-md bg-gray-200 text-gray-600 hover:bg-gray-300 transition duration-300">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                        <a href="#" class="px-4 py-2 rounded-md bg-yellow-500 text-white hover:bg-yellow-600 transition duration-300">1</a>
+                        <a href="#" class="px-4 py-2 rounded-md bg-gray-200 text-gray-600 hover:bg-gray-300 transition duration-300">2</a>
+                        <a href="#" class="px-4 py-2 rounded-md bg-gray-200 text-gray-600 hover:bg-gray-300 transition duration-300">3</a>
+                        <span class="px-4 py-2 text-gray-600">...</span>
+                        <a href="#" class="px-4 py-2 rounded-md bg-gray-200 text-gray-600 hover:bg-gray-300 transition duration-300">8</a>
+                        <a href="#" class="px-3 py-2 rounded-md bg-gray-200 text-gray-600 hover:bg-gray-300 transition duration-300">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 mt-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <svg class="h-8 w-8 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2-1a1 1 0 00-1 1v12a1 1 0 001 1h8a1 1 0 001-1V4a1 1 0 00-1-1H6z" clip-rule="evenodd"></path>
+                            <path d="M8 7a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1zm0 4a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"></path>
+                        </svg>
+                        <span class="text-xl font-bold">TaleHive</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">Your ultimate destination for digital reading. Discover, read, and share your favorite books.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-pinterest"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Browse</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Categories</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">FAQ</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Terms of Service</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start space-x-2">
+                            <i class="fas fa-map-marker-alt text-yellow-500 mt-1"></i>
+                            <span class="text-gray-400">123 Book Street, Reading City, RC 12345</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <i class="fas fa-envelope text-yellow-500 mt-1"></i>
+                            <span class="text-gray-400">contact@talehive.com</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <i class="fas fa-phone text-yellow-500 mt-1"></i>
+                            <span class="text-gray-400">+1 (555) 123-4567</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2023 TaleHive. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for sticky search functionality -->
+    <script>
+        // Simple script to add shadow to sticky search when scrolled
+        window.addEventListener('scroll', function() {
+            const stickySearch = document.querySelector('.sticky-search');
+            if (window.scrollY > 100) {
+                stickySearch.classList.add('shadow-md');
+            } else {
+                stickySearch.classList.remove('shadow-md');
+            }
+        });
+    </script>
+</body>
+</html>
