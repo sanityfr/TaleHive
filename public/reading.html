@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading - TaleHive</title>
+    <!-- tailwindcss  -->
+    <link rel="stylesheet" href="./assets/css/tailwind.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Reading page specific styles */
+        body {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        /* Theme styles */
+        .theme-white {
+            background-color: #ffffff;
+            color: #333333;
+        }
+        
+        .theme-sepia {
+            background-color: #f8f1e3;
+            color: #5b4636;
+        }
+        
+        .theme-dark {
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+        }
+        
+        /* Reading container */
+        .reading-container {
+            max-width: 800px;
+            line-height: 1.8;
+            font-family: 'Georgia', serif;
+        }
+        
+        /* Font size classes */
+        .font-size-small {
+            font-size: 16px;
+        }
+        
+        .font-size-medium {
+            font-size: 18px;
+        }
+        
+        .font-size-large {
+            font-size: 20px;
+        }
+        
+        .font-size-xlarge {
+            font-size: 22px;
+        }
+        
+        /* Progress bar */
+        .progress-bar {
+            height: 4px;
+            background-color: rgba(245, 158, 11, 0.3);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 50;
+        }
+        
+        /* Controls panel */
+        .controls-panel {
+            transition: transform 0.3s ease;
+        }
+        
+        .controls-panel.hidden {
+            transform: translateY(100%);
+        }
+        
+        /* Theme buttons */
+        .theme-button {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        
+        .theme-button:hover {
+            transform: scale(1.1);
+        }
+        
+        .theme-button.active {
+            border-color: #f59e0b;
+            transform: scale(1.1);
+        }
+        
+        /* Highlight styles */
+        .highlight-yellow {
+            background-color: rgba(245, 158, 11, 0.3);
+            cursor: pointer;
+        }
+        
+        /* Bookmark indicator */
+        .bookmark-indicator {
+            position: absolute;
+            right: 0;
+            width: 20px;
+            height: 40px;
+            background-color: #f59e0b;
+            border-radius: 2px 0 0 2px;
+            transition: transform 0.3s ease;
+        }
+        
+        /* Chapter navigation */
+        .chapter-nav {
+            transition: opacity 0.3s ease;
+        }
+        
+        .chapter-nav:hover {
+            opacity: 1 !important;
+        }
+    </style>
+</head>
+<body class="theme-white font-size-medium">
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="readingProgress" style="width: 0%;"></div>
+    
+    <!-- Top Navigation (appears on tap/click) -->
+    <div class="fixed top-0 left-0 w-full bg-white shadow-md py-3 px-4 flex justify-between items-center z-40 transition-transform duration-300 transform -translate-y-full" id="topNav">
+        <a href="book-detail.html" class="text-gray-700 hover:text-yellow-500 transition duration-300">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Book
+        </a>
+        <div class="text-gray-700 text-sm">
+            <span id="chapterTitle">Chapter 1: The Beginning</span>
+        </div>
+        <button id="bookmarkButton" class="text-gray-700 hover:text-yellow-500 transition duration-300">
+            <i class="far fa-bookmark"></i>
+        </button>
+    </div>
+    
+    <!-- Reading Content -->
+    <div class="container mx-auto px-4 py-16 md:py-24 reading-container" id="readingContent">
+        <h1 class="text-3xl font-bold mb-8 text-center">Chapter 1: The Beginning</h1>
+        
+        <p class="mb-4">Elian stared at the crystal in his palm, its facets catching the afternoon light streaming through his bedroom window. It was smaller than his thumbnail, yet it seemed to pulse with an inner energy that he couldn't explain. He had found it that morning, half-buried in the riverbed where he often went to think.</p>
+        
+        <p class="mb-4">"What are you?" he whispered, turning the crystal between his fingers. For a brief moment, he thought he felt it warm to his touch, but that had to be his imagination.</p>
+        
+        <p class="mb-4">The village of Stonehollow was not known for anything remarkable. Nestled between rolling hills and dense forests, it was a place where generations of families had lived quiet, predictable lives. Elian had always felt like an outsider, his curiosity about the world beyond their valley setting him apart from his peers who were content with the familiar rhythms of village life.</p>
+        
+        <p class="mb-4">His father was the village blacksmith, and everyone expected Elian to follow in his footsteps. But the thought of spending his days at the forge, crafting horseshoes and repairing farm tools, made something inside him wither. He yearned for something more, though he couldn't articulate what that "more" might be.</p>
+        
+        <p class="mb-4">And now, this crystal. It seemed to call to him in a language without words.</p>
+        
+        <p class="mb-4">A knock at his door startled him. He quickly closed his fist around the crystal and slipped it into his pocket.</p>
+        
+        <p class="mb-4">"Elian?" His mother's voice. "The Magistrate's caravan has arrived. Your father wants you at the square to help with the horses."</p>
+        
+        <p class="mb-4">"Coming," he called back, his mind still on the crystal. The Magistrate's annual visit was a big event in Stonehollow. He brought news from the capital, settled disputes too complex for the village elder, and sometimes recruited young people for service in the city.</p>
+        
+        <p class="mb-4">Perhaps this year would be different. Perhaps this year, Elian would find a way out of Stonehollow.</p>
+        
+        <p class="mb-4">As he made his way to the village square, he felt the crystal in his pocket, a small weight that somehow seemed significant. Little did he know that this tiny object would change the course of his life forever, thrusting him into a world of ancient magic, political intrigue, and powers beyond his imagination.</p>
+        
+        <p class="mb-4">The square was already crowded when Elian arrived. Villagers in their best clothes milled about, eager for a glimpse of the Magistrate and his entourage. The caravan's wagons formed a semicircle at the center, their polished wood and brass fittings gleaming in the sun.</p>
+        
+        <p class="mb-4">Elian spotted his father directing some of the younger men as they helped unhitch the horses. He started toward him, but something caught his eye—a figure standing apart from the Magistrate's usual guards and attendants.</p>
+        
+        <p class="mb-4">A woman, tall and straight-backed, dressed in a fitted coat of deep blue that seemed to shimmer with subtle patterns when she moved. Her dark hair was pulled back in a severe style, revealing sharp cheekbones and eyes that surveyed the crowd with cool assessment.</p>
+        
+        <p class="mb-4">What struck Elian most was the staff she carried—a length of pale wood topped with a clear crystal similar to the one in his pocket, only much larger.</p>
+        
+        <p class="mb-4">As if sensing his gaze, the woman turned and looked directly at him. For a moment, Elian couldn't breathe. Then, to his shock, she smiled and began walking toward him.</p>
+        
+        <p class="mb-4">In his pocket, the crystal suddenly felt hot against his thigh.</p>
+    </div>
+    
+    <!-- Bottom Controls Panel -->
+    <div class="fixed bottom-0 left-0 w-full bg-white shadow-md py-4 px-6 flex justify-between items-center z-40 controls-panel" id="controlsPanel">
+        <!-- Font Size Controls -->
+        <div class="flex items-center space-x-4">
+            <button class="text-gray-700 hover:text-yellow-500 transition duration-300" id="decreaseFontBtn">
+                <i class="fas fa-font text-sm"></i>
+            </button>
+            <button class="text-gray-700 hover:text-yellow-500 transition duration-300" id="increaseFontBtn">
+                <i class="fas fa-font text-lg"></i>
+            </button>
+        </div>
+        
+        <!-- Theme Controls -->
+        <div class="flex items-center space-x-3">
+            <button class="theme-button bg-white active" id="whiteThemeBtn"></button>
+            <button class="theme-button bg-[#f8f1e3]" id="sepiaThemeBtn"></button>
+            <button class="theme-button bg-[#1a1a1a]" id="darkThemeBtn"></button>
+        </div>
+        
+        <!-- Additional Controls -->
+        <div class="flex items-center space-x-4">
+            <button class="text-gray-700 hover:text-yellow-500 transition duration-300" id="highlightBtn">
+                <i class="fas fa-highlighter"></i>
+            </button>
+            <button class="text-gray-700 hover:text-yellow-500 transition duration-300" id="chaptersBtn">
+                <i class="fas fa-list"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Chapter Navigation (appears when clicking chapters button) -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden" id="chaptersPanel">
+        <div class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-white shadow-lg overflow-y-auto">
+            <div class="p-4 border-b sticky top-0 bg-white z-10 flex justify-between items-center">
+                <h3 class="text-lg font-bold">Chapters</h3>
+                <button class="text-gray-700 hover:text-yellow-500 transition duration-300" id="closeChaptersBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-4">
+                <ul class="space-y-4">
+                    <li class="border-b pb-2">
+                        <a href="#" class="block py-2 px-3 bg-yellow-100 text-yellow-800 rounded">
+                            <div class="font-medium">Chapter 1</div>
+                            <div class="text-sm text-gray-600">The Beginning</div>
+                        </a>
+                    </li>
+                    <li class="border-b pb-2">
+                        <a href="#" class="block py-2 px-3 hover:bg-gray-100 rounded transition duration-300">
+                            <div class="font-medium">Chapter 2</div>
+                            <div class="text-sm text-gray-600">The Crystal's Secret</div>
+                        </a>
+                    </li>
+                    <li class="border-b pb-2">
+                        <a href="#" class="block py-2 px-3 hover:bg-gray-100 rounded transition duration-300">
+                            <div class="font-medium">Chapter 3</div>
+                            <div class="text-sm text-gray-600">Journey to the Capital</div>
+                        </a>
+                    </li>
+                    <li class="border-b pb-2">
+                        <a href="#" class="block py-2 px-3 hover:bg-gray-100 rounded transition duration-300">
+                            <div class="font-medium">Chapter 4</div>
+                            <div class="text-sm text-gray-600">The Academy</div>
+                        </a>
+                    </li>
+                    <li class="border-b pb-2">
+                        <a href="#" class="block py-2 px-3 hover:bg-gray-100 rounded transition duration-300">
+                            <div class="font-medium">Chapter 5</div>
+                            <div class="text-sm text-gray-600">First Lessons</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Left/Right Page Navigation -->
+    <div class="fixed left-0 top-0 bottom-0 w-1/4 flex items-center justify-start opacity-0 hover:opacity-100 transition-opacity duration-300 chapter-nav">
+        <button class="ml-4 bg-white bg-opacity-80 rounded-full p-3 shadow-md text-gray-700 hover:text-yellow-500 transition duration-300">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+    </div>
+    
+    <div class="fixed right-0 top-0 bottom-0 w-1/4 flex items-center justify-end opacity-0 hover:opacity-100 transition-opacity duration-300 chapter-nav">
+        <button class="mr-4 bg-white bg-opacity-80 rounded-full p-3 shadow-md text-gray-700 hover:text-yellow-500 transition duration-300">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <!-- JavaScript for Reading Page Functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const body = document.body;
+            const readingContent = document.getElementById('readingContent');
+            const topNav = document.getElementById('topNav');
+            const controlsPanel = document.getElementById('controlsPanel');
+            const progressBar = document.getElementById('readingProgress');
+            const decreaseFontBtn = document.getElementById('decreaseFontBtn');
+            const increaseFontBtn = document.getElementById('increaseFontBtn');
+            const whiteThemeBtn = document.getElementById('whiteThemeBtn');
+            const sepiaThemeBtn = document.getElementById('sepiaThemeBtn');
+            const darkThemeBtn = document.getElementById('darkThemeBtn');
+            const bookmarkButton = document.getElementById('bookmarkButton');
+            const highlightBtn = document.getElementById('highlightBtn');
+            const chaptersBtn = document.getElementById('chaptersBtn');
+            const chaptersPanel = document.getElementById('chaptersPanel');
+            const closeChaptersBtn = document.getElementById('closeChaptersBtn');
+            
+            // State variables
+            let isHighlightMode = false;
+            let currentFontSize = 'medium'; // small, medium, large, xlarge
+            let lastScrollPosition = window.pageYOffset;
+            let isNavVisible = false;
+            
+            // Font size controls
+            decreaseFontBtn.addEventListener('click', function() {
+                if (currentFontSize === 'medium') {
+                    body.classList.remove('font-size-medium');
+                    body.classList.add('font-size-small');
+                    currentFontSize = 'small';
+                } else if (currentFontSize === 'large') {
+                    body.classList.remove('font-size-large');
+                    body.classList.add('font-size-medium');
+                    currentFontSize = 'medium';
+                } else if (currentFontSize === 'xlarge') {
+                    body.classList.remove('font-size-xlarge');
+                    body.classList.add('font-size-large');
+                    currentFontSize = 'large';
+                }
+            });
+            
+            increaseFontBtn.addEventListener('click', function() {
+                if (currentFontSize === 'small') {
+                    body.classList.remove('font-size-small');
+                    body.classList.add('font-size-medium');
+                    currentFontSize = 'medium';
+                } else if (currentFontSize === 'medium') {
+                    body.classList.remove('font-size-medium');
+                    body.classList.add('font-size-large');
+                    currentFontSize = 'large';
+                } else if (currentFontSize === 'large') {
+                    body.classList.remove('font-size-large');
+                    body.classList.add('font-size-xlarge');
+                    currentFontSize = 'xlarge';
+                }
+            });
+            
+            // Theme controls
+            whiteThemeBtn.addEventListener('click', function() {
+                body.className = body.className.replace(/theme-\w+/, 'theme-white');
+                setActiveThemeButton(whiteThemeBtn);
+            });
+            
+            sepiaThemeBtn.addEventListener('click', function() {
+                body.className = body.className.replace(/theme-\w+/, 'theme-sepia');
+                setActiveThemeButton(sepiaThemeBtn);
+            });
+            
+            darkThemeBtn.addEventListener('click', function() {
+                body.className = body.className.replace(/theme-\w+/, 'theme-dark');
+                setActiveThemeButton(darkThemeBtn);
+            });
+            
+            function setActiveThemeButton(button) {
+                whiteThemeBtn.classList.remove('active');
+                sepiaThemeBtn.classList.remove('active');
+                darkThemeBtn.classList.remove('active');
+                button.classList.add('active');
+            }
+            
+            // Bookmark functionality
+            bookmarkButton.addEventListener('click', function() {
+                const icon = bookmarkButton.querySelector('i');
+                if (icon.classList.contains('far')) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                    icon.style.color = '#f59e0b';
+                    // Save bookmark position logic would go here
+                    showToast('Page bookmarked');
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                    icon.style.color = '';
+                    // Remove bookmark logic would go here
+                    showToast('Bookmark removed');
+                }
+            });
+            
+            // Highlight functionality
+            highlightBtn.addEventListener('click', function() {
+                isHighlightMode = !isHighlightMode;
+                if (isHighlightMode) {
+                    highlightBtn.style.color = '#f59e0b';
+                    showToast('Highlight mode activated. Select text to highlight.');
+                } else {
+                    highlightBtn.style.color = '';
+                    showToast('Highlight mode deactivated');
+                }
+            });
+            
+            // Handle text selection for highlighting
+            document.addEventListener('mouseup', function() {
+                if (!isHighlightMode) return;
+                
+                const selection = window.getSelection();
+                if (selection.toString().length > 0) {
+                    const range = selection.getRangeAt(0);
+                    const span = document.createElement('span');
+                    span.className = 'highlight-yellow';
+                    try {
+                        range.surroundContents(span);
+                        showToast('Text highlighted');
+                    } catch (e) {
+                        console.error('Could not highlight selection', e);
+                    }
+                    selection.removeAllRanges();
+                }
+            });
+            
+            // Chapters panel
+            chaptersBtn.addEventListener('click', function() {
+                chaptersPanel.classList.remove('hidden');
+            });
+            
+            closeChaptersBtn.addEventListener('click', function() {
+                chaptersPanel.classList.add('hidden');
+            });
+            
+            // Close chapters panel when clicking outside
+            chaptersPanel.addEventListener('click', function(e) {
+                if (e.target === chaptersPanel) {
+                    chaptersPanel.classList.add('hidden');
+                }
+            });
+            
+            // Show/hide navigation on tap/click
+            readingContent.addEventListener('click', function() {
+                toggleNavigation();
+            });
+            
+            function toggleNavigation() {
+                if (isNavVisible) {
+                    topNav.style.transform = 'translateY(-100%)';
+                } else {
+                    topNav.style.transform = 'translateY(0)';
+                }
+                isNavVisible = !isNavVisible;
+            }
+            
+            // Update progress bar as user scrolls
+            window.addEventListener('scroll', function() {
+                updateProgressBar();
+                
+                // Auto-hide navigation when scrolling down
+                const currentScrollPos = window.pageYOffset;
+                if (currentScrollPos > lastScrollPosition && isNavVisible) {
+                    topNav.style.transform = 'translateY(-100%)';
+                    isNavVisible = false;
+                }
+                lastScrollPosition = currentScrollPos;
+            });
+            
+            function updateProgressBar() {
+                const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+                const clientHeight = document.documentElement.clientHeight || window.innerHeight;
+                const scrolled = (scrollTop / (scrollHeight - clientHeight)) * 100;
+                progressBar.style.width = scrolled + '%';
+            }
+            
+            // Helper function to show toast messages
+            function showToast(message) {
+                const toast = document.createElement('div');
+                toast.className = 'fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg z-50';
+                toast.textContent = message;
+                document.body.appendChild(toast);
+                
+                setTimeout(function() {
+                    toast.style.opacity = '0';
+                    toast.style.transition = 'opacity 0.5s ease';
+                    setTimeout(function() {
+                        document.body.removeChild(toast);
+                    }, 500);
+                }, 2000);
+            }
+            
+            // Initialize
+            updateProgressBar();
+        });
+    </script>
+</body>
+</html>
